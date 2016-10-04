@@ -1,3 +1,4 @@
+
 interface Portion<T> {
 	protein : T,
 	proteinFat : T,
@@ -7,6 +8,7 @@ interface Portion<T> {
 	fruit : T,
 	vegetables : T
 }
+
 type PortionType = 'protein' | 'proteinFat' | 'fat' | 'carbs' | 'dairy' | 'fruit' | 'vegetables';
 interface PortionLabels extends Portion<string>{}
 interface PortionAmounts extends Portion<Number>{}
@@ -16,7 +18,7 @@ class Meal{
 	name : string;
 	portions : PortionAmounts; 
 
-	constructor(name : string,portions : PortionAmounts){
+	constructor(name : string,portions? : PortionAmounts){
 		this.name = name;
 		this.portions = portions || 
 		  {
@@ -49,11 +51,15 @@ class Meal{
 class PortionsTable{
 	meals : Meal[];
 	portionLabels : PortionLabels;
+	targetHTML : string;
+	storageKey : string;
 
 	static HOLD_TIME = 500;
 
-	constructor(meals : Meal[], portionLabels? : PortionLabels){
+	constructor(meals : Meal[], tableID : string, portionLabels? : PortionLabels){
 	    this.meals = meals;
+	    this.targetHTML = tableID;
+	    this.storageKey = tableID;
 	    this.portionLabels = portionLabels || 
 	      {
 			protein : 'Protein',
@@ -67,7 +73,7 @@ class PortionsTable{
 	}
 
 	public createTable() : void{
-		let table = document.getElementById("portionsTable");
+		let table = document.getElementById(this.targetHTML);
 
 		table.appendChild(this.createHeaderRow());
 		this.meals.map(meal => table.appendChild(this.createMealRow(meal)));
@@ -127,7 +133,7 @@ class PortionsTable{
 									    cell.innerHTML = (meal.substractPortion(portionType)||'')+'';
 										this.storeData();
 				                    }
-								}
+							};
 	} 
 
 	private createCell(id : string, value : string) : HTMLElement{
@@ -138,38 +144,10 @@ class PortionsTable{
 	}
 
 	private storeData() : void{
-		localStorage.setItem('meals', JSON.stringify(this.meals));
-		console.log(localStorage.getItem('meals'));
+		localStorage.setItem(this.storageKey, JSON.stringify(this.meals));
+		console.log(localStorage.getItem(this.storageKey));
 	}
 }
 
 
-function test(){
-
-		let portionTypes = {protein:'Proteina',proteinFat :'Proteina Grasa',fat :'Grasa',carbs :'HC',dairy :'Lacteos',fruit :'Fruta',vegetables:'Vegetales'};
-		let mealNames = ['Breakfast','Lunch','Dinner'];
-		let portion = {
-			protein : 1,
-			proteinFat : 0,
-			fat : 2,
-			carbs : 3,
-			dairy : 0,
-			fruit : 2,
-			vegetables : 0
-		  };
-
-		let table : PortionsTable;
-		let storedMeals : Meal[] = JSON.parse(localStorage.getItem('meals'));
-		let meals;
-
-		if(storedMeals!=null){
-          meals = storedMeals.map(m => new Meal(m.name,m.portions));
-		}else{
-          meals = mealNames.map(name => new Meal(name,portion));
-		}
-
-		table =   new PortionsTable(meals, portionTypes);
-		table.createTable();
-
-}
 
