@@ -93,6 +93,7 @@ class PortionsTable{
 
 			headerCol.id = portionType;
 			headerCol.innerHTML = this.portionLabels[portionType];
+			headerCol.classList.add(portionType); 
 			headerRow.appendChild(headerCol);	
 		}
 
@@ -108,10 +109,13 @@ class PortionsTable{
 	}
 
 	private addColumns(row : HTMLElement, meal : Meal)  : void{
-		row.appendChild(this.createCell(meal.name, meal.getMealLabel()));
+		let rowHeader = this.createCell(meal.name, meal.getMealLabel());
+		rowHeader.classList.add("rowHeader");
+		row.appendChild(rowHeader);
 
 		for (let portionType in this.portionLabels){
 			let cell = this.createCell(meal.name+'-'+portionType, meal.portions[portionType] || '');
+			cell.classList.add(portionType);
 			this.handleCellEvents(cell, meal, <PortionType>portionType);
 			row.appendChild(cell);	
 		}

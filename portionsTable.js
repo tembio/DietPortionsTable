@@ -59,6 +59,7 @@ var PortionsTable = (function () {
             var headerCol = document.createElement('th');
             headerCol.id = portionType;
             headerCol.innerHTML = this.portionLabels[portionType];
+            headerCol.classList.add(portionType);
             headerRow.appendChild(headerCol);
         }
         return headerRow;
@@ -70,9 +71,12 @@ var PortionsTable = (function () {
         return row;
     };
     PortionsTable.prototype.addColumns = function (row, meal) {
-        row.appendChild(this.createCell(meal.name, meal.getMealLabel()));
+        var rowHeader = this.createCell(meal.name, meal.getMealLabel());
+        rowHeader.classList.add("rowHeader");
+        row.appendChild(rowHeader);
         for (var portionType in this.portionLabels) {
             var cell = this.createCell(meal.name + '-' + portionType, meal.portions[portionType] || '');
+            cell.classList.add(portionType);
             this.handleCellEvents(cell, meal, portionType);
             row.appendChild(cell);
         }

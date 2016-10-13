@@ -12,9 +12,6 @@ window.onload = function(){
 			new Meal("AnyTime",{"protein":1,"proteinFat":0,"fat":0,"carbs":3,"dairy":0,"fruit":2,"vegetables":0}),
 			];
 
-
-		
-
 		let remainingPortions : Meal[] = []; 
 		let storedRemainingMeals = JSON.parse(localStorage.getItem('remainingPortions'));  
 
@@ -23,10 +20,8 @@ window.onload = function(){
 		else
 			if(storedRemainingMeals)
 				storedRemainingMeals.map( x => remainingPortions.push(new Meal(x.name, x.portions)) );
-		
-
-
-		
+			else
+				remainingPortions = dietMeals;
 
 		let table : PortionsTable = new PortionsTable(remainingPortions,'remainingPortions');
 		table.createTable();

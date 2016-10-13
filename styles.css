@@ -1,0 +1,54 @@
+table{
+	width:100%;
+	height:100%;
+}
+
+td,th{
+	padding: 15px;
+}
+
+th{
+	border: 3px solid;
+	height: 20%;
+}
+th.protein{background-color:#f2dcdb;}
+th.proteinFat{background-color:#fde9d9;}
+th.fat{background-color:#c5d9f1;}
+th.carbs{background-color:#dce6f1;}
+th.dairy{background-color:#f2f2f2;}
+th.fruit{background-color:#ebf1de;}
+th.vegetables{background-color:#dff3dd;}
+
+tr:last-child{
+	border-bottom: none;
+}
+
+tr{
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	height: 16%;
+}
+
+td{
+	font-size: 1.3em;
+	border: none;
+	text-align:center;
+	width:13%;
+	font-weight: bold;
+}
+
+td.rowHeader{
+	font-size: 1em;
+	text-align:left;
+	width: 9%;
+	background-color: #e4dfec;
+	color:#403151;
+}
+
+td.protein{color:red;}
+td.proteinFat{color:orange;}
+td.fat{color:#31869b;}
+td.carbs{color:#95b3d7;}
+td.dairy{color:#808080;}
+td.fruit{color:#76933c;}
+td.vegetables{color:#92d050;}
